@@ -19,6 +19,9 @@ const GameBoard = () => {
     getProblems();
   }, []);
 
+  const updateUserInput = (ind) => {
+    console.log(ind);
+  };
   return (
     <div className="container">
       <div>
@@ -28,7 +31,17 @@ const GameBoard = () => {
         {problem.split("").map((item, ind) => {
           return (
             <div key={ind} className={`row${ind} grid-item`}>
-              {item}
+              {item !== "0" ? (
+                item
+              ) : (
+                <input
+                  className="cellInput"
+                  type="text"
+                  id={`cell${ind}`}
+                  onChange={updateUserInput(ind)}
+                  maxLength="1"
+                />
+              )}
             </div>
           );
         })}
