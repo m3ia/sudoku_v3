@@ -97,6 +97,10 @@ const GameBoard = () => {
               className={`cell${ind} grid-item`}
               style={{
                 backgroundColor: dupeCells.includes(ind) ? "yellow" : "white",
+                borderTop: Math.floor(ind / 9) % 3 === 0 && "5px solid blue",
+                borderLeft: (ind % 9) % 3 === 0 && "5px solid blue",
+                borderRight: ind % 9 === 8 && "5px solid blue",
+                borderBottom: Math.floor(ind / 9) === 8 && "5px solid blue",
               }}>
               {item !== "0" ? (
                 item
