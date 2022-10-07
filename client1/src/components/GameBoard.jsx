@@ -3,7 +3,25 @@ const GameBoard = () => {
   const [problems, setProblems] = useState([]);
   const [problem, setProblem] = useState("");
   const [solution, setSolution] = useState("");
+  const [currentInput, setCurrentInput] = useState(problem.slice());
 
+  const updateUserInput = (val, ind) => {
+    let inputArr = currentInput.split("");
+    if (!val) {
+      inputArr[ind] = "0";
+    } else {
+      inputArr[ind] = String(val);
+    }
+
+    setCurrentInput(inputArr.join(""));
+    console.log(currentInput);
+    console.log(solution);
+  };
+
+  // Check Answer
+  const checkAnswer = () => {
+    console.log("input === solution", currentInput === solution);
+  };
   useEffect(() => {
     // Get Problems
     const getProblems = async () => {
@@ -11,17 +29,14 @@ const GameBoard = () => {
         .then((res) => res.json())
         .then((res) => {
           setProblems([...res]);
-          console.log("res", [...res]);
           setProblem(res[0].problem);
+          setCurrentInput(res[0].problem.slice());
           setSolution(res[0].solution);
         });
     };
     getProblems();
   }, []);
 
-  const updateUserInput = (ind) => {
-    console.log(ind);
-  };
   return (
     <div className="container">
       <div>
@@ -38,13 +53,16 @@ const GameBoard = () => {
                   className="cellInput"
                   type="text"
                   id={`cell${ind}`}
-                  onChange={updateUserInput(ind)}
+                  onChange={(e) => updateUserInput(e.target.value, ind)}
                   maxLength="1"
                 />
               )}
             </div>
           );
         })}
+      </div>
+      <div className="menu">
+        <button onClick={checkAnswer}>Check Answer</button>
       </div>
     </div>
   );
