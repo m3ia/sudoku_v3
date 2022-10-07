@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 // GET - Get all problems and solutions
 app.get('/problems', async function (req, res) {
   try {
-    const problems = await db.any('SELECT problems.id, problems.problem, solutions.solution FROM solutions LEFT JOIN problems ON problems.id=solutions.problem_id ORDER BY problems.id');
+    const problems = await db.any('SELECT * FROM problems ORDER BY id');
     res.send(problems);
   } catch (e) {
     return res.status(400).json({ e });
